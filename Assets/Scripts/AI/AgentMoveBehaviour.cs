@@ -1,7 +1,6 @@
 using UnityEngine;
 using CrashKonijn.Goap.Behaviours;
 using CrashKonijn.Goap.Interfaces;
-using UnityEngine;
 
 public class AgentMoveBehaviour : MonoBehaviour
 {

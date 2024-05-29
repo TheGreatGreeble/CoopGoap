@@ -15,6 +15,8 @@ public class CharacterController2D : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        //disable rotation
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -33,7 +35,7 @@ public class CharacterController2D : MonoBehaviour
     private void Jump()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
-        Debug.Log(isGrounded);
+
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
