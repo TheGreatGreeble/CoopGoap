@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController2D : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpHeight = 10f;
+    [SerializeField] private float jumpHeight = 5f;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
 
