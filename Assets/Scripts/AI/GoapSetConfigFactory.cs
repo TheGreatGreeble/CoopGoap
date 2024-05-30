@@ -18,6 +18,8 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .AddCondition<IsWandering>(Comparison.GreaterThanOrEqual, 1);
         builder.AddGoal<FollowGoal>()
             .AddCondition<IsFollowing>(Comparison.GreaterThanOrEqual, 1);
+        builder.AddGoal<StopGoal>()
+            .AddCondition<IsStopping>(Comparison.GreaterThanOrEqual, 1);
 
         // Actions
         builder.AddAction<WanderAction>()
@@ -30,12 +32,19 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .AddEffect<IsFollowing>(EffectType.Increase)
             .SetBaseCost(1)
             .SetInRange(0.3f);
+        builder.AddAction<StopAction>()
+            .SetTarget<StopTarget>()
+            .AddEffect<IsStopping>(EffectType.Increase)
+            .SetBaseCost(1)
+            .SetInRange(0.3f);
 
         // Target Sensors
         builder.AddTargetSensor<WanderTargetSensor>()
             .SetTarget<WanderTarget>();
         builder.AddTargetSensor<FollowTargetSensor>()
             .SetTarget<FollowTarget>();
+        builder.AddTargetSensor<StopTargetSensor>()
+            .SetTarget<StopTarget>();
 
         // World Sensors
         // This example doesn't have any world sensors. Look in the examples for more information on how to use them.

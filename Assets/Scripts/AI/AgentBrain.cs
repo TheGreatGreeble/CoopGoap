@@ -15,18 +15,29 @@ public class AgentBrain : MonoBehaviour
     private void Start()
     {
         //this.agent.SetGoal<WanderGoal>(false);
-        this.agent.SetGoal<FollowGoal>(false);
+        //this.agent.SetGoal<FollowGoal>(false);
     }
 
     //FixedUpdate is where we inject goals to the ai through player action
-    private void FixedUpdate()
+    void FixedUpdate()
     {
-        if (this.DistanceFromPlayer() >= 5) {
-            this.agent.SetGoal<WanderGoal>(true);
+        // Check for the "E" key press every frame
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            // If the "E" key is pressed and the agent can move, set the goals accordingly
+            agent.SetGoal<WanderGoal>(false);
+            agent.SetGoal<FollowGoal>(false);
         }
-        else {
-            this.agent.SetGoal<WanderGoal>(false);
-            this.agent.SetGoal<FollowGoal>(true);
+
+        // Check the distance from the player and set the goals accordingly
+        if (DistanceFromPlayer() >= 5)
+        {
+            agent.SetGoal<StopGoal>(true);;
+        }
+        else
+        {
+            agent.SetGoal<StopGoal>(false);;
+            agent.SetGoal<FollowGoal>(true);
         }
     }
 
