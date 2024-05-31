@@ -52,6 +52,6 @@ public class AgentMoveBehaviour : MonoBehaviour
         if (this.currentTarget == null)
             return;
         
-        this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.transform.position.y, this.currentTarget.Position.z), Time.deltaTime * moveSpeed);
+        this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.currentTarget.Position.y, this.currentTarget.Position.z), Time.deltaTime * moveSpeed);
     }
 }

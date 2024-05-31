@@ -14,29 +14,39 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
         var builder = new GoapSetBuilder("GettingStartedSet");
         
         // Goals
+        builder.AddGoal<PuzzleGoal>()
+            .AddCondition<PuzzleCompleted>(Comparison.GreaterThanOrEqual, 10);
         builder.AddGoal<WanderGoal>()
             .AddCondition<IsWandering>(Comparison.GreaterThanOrEqual, 1);
         builder.AddGoal<FollowGoal>()
             .AddCondition<IsFollowing>(Comparison.GreaterThanOrEqual, 1);
         builder.AddGoal<StopGoal>()
             .AddCondition<IsStopping>(Comparison.GreaterThanOrEqual, 1);
+        
 
         // Actions
+        builder.AddAction<ButtonAction>()
+            .SetTarget<ButtonTarget>()
+            .AddEffect<PuzzleCompleted>(EffectType.Increase)
+            .SetBaseCost(1)
+            .SetInRange(0.2f);
         builder.AddAction<WanderAction>()
             .SetTarget<WanderTarget>()
             .AddEffect<IsWandering>(EffectType.Increase)
-            .SetBaseCost(1)
+            .SetBaseCost(2)
             .SetInRange(0.3f);
         builder.AddAction<FollowAction>()
             .SetTarget<FollowTarget>()
             .AddEffect<IsFollowing>(EffectType.Increase)
-            .SetBaseCost(1)
+            .SetBaseCost(2)
             .SetInRange(0.3f);
         builder.AddAction<StopAction>()
             .SetTarget<StopTarget>()
             .AddEffect<IsStopping>(EffectType.Increase)
-            .SetBaseCost(1)
+            .SetBaseCost(2)
             .SetInRange(0.3f);
+        
+        
 
         // Target Sensors
         builder.AddTargetSensor<WanderTargetSensor>()
@@ -45,9 +55,15 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .SetTarget<FollowTarget>();
         builder.AddTargetSensor<StopTargetSensor>()
             .SetTarget<StopTarget>();
+        builder.AddTargetSensor<WaitTargetSensor>()
+            .SetTarget<WaitTarget>();
+        builder.AddTargetSensor<ButtonSensor>()
+            .SetTarget<ButtonTarget>();
 
         // World Sensors
-        // This example doesn't have any world sensors. Look in the examples for more information on how to use them.
+
+        builder.AddWorldSensor<PuzzleSensor>()
+            .SetKey<PuzzleCompleted>();
 
         return builder.Build();
     }
