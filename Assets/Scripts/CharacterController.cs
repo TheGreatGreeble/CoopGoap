@@ -28,8 +28,9 @@ public class CharacterController2D : MonoBehaviour
 
     private void Move()
     {
-        float moveDirection = Input.GetAxis("Horizontal");
-        rb.velocity = new Vector2(moveDirection * moveSpeed, rb.velocity.y);
+        float moveWEDirection = Input.GetAxis("Horizontal");
+        float moveNSDirection = Input.GetAxis("Vertical");
+        rb.velocity = new Vector2(moveWEDirection * moveSpeed, moveNSDirection * moveSpeed);
     }
 
     private void Jump()

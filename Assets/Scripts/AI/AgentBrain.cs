@@ -32,7 +32,8 @@ public class AgentBrain : MonoBehaviour
         // Check the distance from the player and set the goals accordingly
         if (DistanceFromPlayer() >= 5)
         {
-            agent.SetGoal<StopGoal>(true);;
+            //agent.SetGoal<StopGoal>(true);;
+            agent.SetGoal<PuzzleGoal>(true);
         }
         else
         {
