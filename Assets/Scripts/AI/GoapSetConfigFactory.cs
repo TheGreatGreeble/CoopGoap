@@ -39,7 +39,7 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .SetTarget<FollowTarget>()
             .AddEffect<IsFollowing>(EffectType.Increase)
             .SetBaseCost(2)
-            .SetInRange(0.3f);
+            .SetInRange(1.5f);
         builder.AddAction<StopAction>()
             .SetTarget<StopTarget>()
             .AddEffect<IsStopping>(EffectType.Increase)

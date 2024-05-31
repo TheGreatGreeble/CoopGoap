@@ -2,14 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using CrashKonijn.Goap.Behaviours;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class AgentBrain : MonoBehaviour
 {
     private AgentBehaviour agent;
+    private PlayerInput input;
+    private InputAction instruction;
 
     private void Awake()
     {
         this.agent = this.GetComponent<AgentBehaviour>();
+        input = GameObject.FindWithTag("Player").GetComponent<PlayerInput>();
+        instruction = input.actions.FindAction("Instruct");
     }
 
     private void Start()
@@ -22,7 +27,7 @@ public class AgentBrain : MonoBehaviour
     void FixedUpdate()
     {
         // Check for the "E" key press every frame
-        if (Input.GetKeyDown(KeyCode.E))
+        if (instruction.triggered)
         {
             // If the "E" key is pressed and the agent can move, set the goals accordingly
             agent.SetGoal<WanderGoal>(false);

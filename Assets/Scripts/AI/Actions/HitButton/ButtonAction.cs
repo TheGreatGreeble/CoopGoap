@@ -36,7 +36,10 @@ public class ButtonAction : ActionBase<ButtonAction.Data>
         foreach (var col in overlaps){
             if (col == null) continue;
             if (sequence.Contains(col.gameObject)) {
-                //TODO: proparly "press" the button
+                Interactable inter;
+                if(col.TryGetComponent(out inter)){
+                    inter.Interact();
+                }
                 col.gameObject.name = "Yes";
                 return ActionRunState.Stop;
             }
