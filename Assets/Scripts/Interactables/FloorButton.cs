@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FloorButton : Interactable
 {
+    public bool isHuman = true;
     public bool isActive = false;
     [SerializeField] bool oneTime = false;
     [SerializeField] bool waitActive = false;
