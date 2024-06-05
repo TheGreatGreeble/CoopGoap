@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using CrashKonijn.Goap.Behaviours;
+using CrashKonijn.Goap.Interfaces;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public class AgentBrain : MonoBehaviour
     private AgentBehaviour agent;
     private PlayerInput input;
     private InputAction instruction;
+    private bool shouldSolvePuzzle = false;
 
     private void Awake()
     {
@@ -21,30 +23,42 @@ public class AgentBrain : MonoBehaviour
     {
         //this.agent.SetGoal<WanderGoal>(false);
         //this.agent.SetGoal<FollowGoal>(false);
+        agent.SetGoal<FollowGoal>(true);
+        //agent.SetGoal<PuzzleGoal>(true);
     }
 
-    //FixedUpdate is where we inject goals to the ai through player action
-    void FixedUpdate()
-    {
+    private void Update() {
         // Check for the "E" key press every frame
         if (instruction.triggered)
         {
-            // If the "E" key is pressed and the agent can move, set the goals accordingly
-            agent.SetGoal<WanderGoal>(false);
-            agent.SetGoal<FollowGoal>(false);
+            if (!shouldSolvePuzzle) {
+                agent.EndAction();
+                agent.SetGoal<PuzzleGoal>(false);
+                shouldSolvePuzzle = true;
+            } else {
+                agent.EndAction();
+                agent.SetGoal<FollowGoal>(false);
+            }
+            
+            
+            
         }
-
-        // Check the distance from the player and set the goals accordingly
-        if (DistanceFromPlayer() >= 5)
-        {
-            //agent.SetGoal<StopGoal>(true);;
-            agent.SetGoal<PuzzleGoal>(true);
-        }
-        else
-        {
-            agent.SetGoal<StopGoal>(false);;
-            agent.SetGoal<FollowGoal>(true);
-        }
+    }
+    //FixedUpdate is where we inject goals to the ai through player action
+    void FixedUpdate()
+    {
+        
+        // // Check the distance from the player and set the goals accordingly
+        // if (DistanceFromPlayer() >= 5)
+        // {
+        //     //agent.SetGoal<StopGoal>(true);;
+        //     agent.SetGoal<PuzzleGoal>(true);
+        // }
+        // else
+        // {
+        //     agent.SetGoal<StopGoal>(false);;
+        //     agent.SetGoal<FollowGoal>(true);
+        // }
     }
 
     private float DistanceFromPlayer()

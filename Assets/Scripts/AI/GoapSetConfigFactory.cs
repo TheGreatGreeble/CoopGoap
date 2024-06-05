@@ -11,11 +11,13 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
 {
     public override IGoapSetConfig Create()
     {
+        PuzzleConfig puzzle = GameObject.FindWithTag("PuzzleConfig").GetComponent<PuzzleConfig>();
+
         var builder = new GoapSetBuilder("GettingStartedSet");
         
         // Goals
         builder.AddGoal<PuzzleGoal>()
-            .AddCondition<PuzzleCompleted>(Comparison.GreaterThanOrEqual, 10);
+            .AddCondition<PuzzleCompleted>(Comparison.GreaterThanOrEqual, puzzle.Sequence.Count);
         builder.AddGoal<WanderGoal>()
             .AddCondition<IsWandering>(Comparison.GreaterThanOrEqual, 1);
         builder.AddGoal<FollowGoal>()
@@ -28,27 +30,31 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
         builder.AddAction<ButtonAction>()
             .SetTarget<ButtonTarget>()
             .AddEffect<PuzzleCompleted>(EffectType.Increase)
-            .SetBaseCost(1)
-            .SetInRange(0.2f);
+            .SetBaseCost(0)
+            .SetInRange(0.2f)
+            .AddCondition<IsNextBtnAlien>(Comparison.SmallerThanOrEqual, 0)
+            .AddCondition<PuzzleCompleted>(Comparison.SmallerThan, puzzle.Sequence.Count);
         builder.AddAction<WaitForPlayerAction>()
             .SetTarget<WaitTarget>()
             .AddEffect<PuzzleCompleted>(EffectType.Increase)
-            .SetBaseCost(2)
-            .SetInRange(0.2f);
+            .SetBaseCost(0)
+            .SetInRange(0.2f)
+            .AddCondition<IsNextBtnAlien>(Comparison.GreaterThanOrEqual, 1)
+            .AddCondition<PuzzleCompleted>(Comparison.SmallerThan, puzzle.Sequence.Count);
         builder.AddAction<WanderAction>()
             .SetTarget<WanderTarget>()
             .AddEffect<IsWandering>(EffectType.Increase)
-            .SetBaseCost(2)
+            .SetBaseCost(0)
             .SetInRange(0.3f);
         builder.AddAction<FollowAction>()
             .SetTarget<FollowTarget>()
             .AddEffect<IsFollowing>(EffectType.Increase)
-            .SetBaseCost(2)
+            .SetBaseCost(1)
             .SetInRange(1.5f);
         builder.AddAction<StopAction>()
             .SetTarget<StopTarget>()
             .AddEffect<IsStopping>(EffectType.Increase)
-            .SetBaseCost(2)
+            .SetBaseCost(0)
             .SetInRange(0.3f);
         
         
@@ -69,6 +75,8 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
 
         builder.AddWorldSensor<PuzzleSensor>()
             .SetKey<PuzzleCompleted>();
+        builder.AddWorldSensor<AlienButtonSensor>()
+            .SetKey<IsNextBtnAlien>();
 
         return builder.Build();
     }

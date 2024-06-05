@@ -10,38 +10,39 @@ using UnityEngine.UI;
 
 public class WaitForPlayerAction : ActionBase<WaitForPlayerAction.Data>
 {
+    PuzzleConfig puzzle;
+    GameObject playerButton;
+    GameObject alienButton;
     // Called when the class is created.
     public override void Created()
     {
+        puzzle = GameObject.FindWithTag("PuzzleConfig").GetComponent<PuzzleConfig>();
+        
     }
 
     // Called when the action is started for a specific agent.
     public override void Start(IMonoAgent agent, Data data)
     {
         // // When the agent is at the target, wait a random amount of time before moving again.
-        // data.Timer = Random.Range(0.3f, 1f);
+        playerButton = puzzle.GetNextPlayerButton();
+        alienButton = puzzle.GetNextAlienButton();
+        Debug.Log(alienButton.name);
 
     }
 
     // Called each frame when the action needs to be performed. It is only called when the agent is in range of it's target.
     public override ActionRunState Perform(IMonoAgent agent, Data data, ActionContext context)
     {
-        List<GameObject> sequence = GameObject.FindWithTag("PuzzleConfig").GetComponent<PuzzleConfig>().Sequence;
-        // Update timer.
-        data.Timer -= context.DeltaTime;
-        Collider2D[] overlaps = new Collider2D[50];
+        List<Collider2D> overlaps = new List<Collider2D>();
         ContactFilter2D filter = new ContactFilter2D();
         agent.GetComponent<BoxCollider2D>().OverlapCollider(filter.NoFilter(),overlaps);
-
-        foreach (var col in overlaps){
-            if (col == null) continue;
-            if (sequence.Contains(col.gameObject)) {
-                Interactable inter;
-                if(col.TryGetComponent(out inter)){
-                    inter.Interact();
+        foreach(Collider2D col in overlaps){
+            if (col.gameObject == alienButton) {
+                Debug.Log("stoping waiting");
+                if (puzzle.GetNextButton() == alienButton) {
+                    Debug.Log("stoping waiting");
+                    return ActionRunState.Stop;
                 }
-                col.gameObject.name = "Yes";
-                return ActionRunState.Stop;
             }
         }
         
@@ -59,6 +60,5 @@ public class WaitForPlayerAction : ActionBase<WaitForPlayerAction.Data>
     public class Data : IActionData
     {
         public ITarget Target { get; set; }
-        public float Timer { get; set; }
     }
 }

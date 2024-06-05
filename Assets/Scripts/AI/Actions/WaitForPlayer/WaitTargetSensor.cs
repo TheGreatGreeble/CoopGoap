@@ -23,27 +23,7 @@ public class WaitTargetSensor : LocalTargetSensorBase
     // Called when the sensor needs to sense a target for a specific agent.
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
-        Vector3 playerPos = this.GetPlayerPosition();
-        
-        return new PositionTarget(playerPos);
-    }
-
-    private Vector3 GetPlayerPosition()
-    {
-        // Find the player GameObject by tag
-        GameObject player = GameObject.FindWithTag("Player");
-        
-        // Check if the player GameObject is found
-        if (player != null)
-        {
-            // Return the player's position
-            return player.transform.position;
-        }
-        else
-        {
-            // Handle the case where the player GameObject is not found
-            Debug.LogWarning("Player GameObject not found!");
-            return Vector3.zero; // Return a default value or handle appropriately
-        }
+        if (puzzle.GetNextButton() == null) return new PositionTarget(agent.transform.position);
+        return new PositionTarget(puzzle.GetNextAlienButton().transform.position);
     }
 }

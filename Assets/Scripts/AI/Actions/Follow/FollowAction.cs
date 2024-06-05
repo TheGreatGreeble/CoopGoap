@@ -26,6 +26,7 @@ public class FollowAction : ActionBase<FollowAction.Data>
         // Update timer.
         data.Timer -= context.DeltaTime;
         
+        
         // If the timer is still higher than 0, continue next frame.
         if (data.Timer > 0)
             return ActionRunState.Continue;

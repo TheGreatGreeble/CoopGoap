@@ -37,7 +37,7 @@ public class PuzzleSensor : GlobalWorldSensorBase
         foreach (var ele in puzzle.Sequence){
             // TODO: Determine if sequence element not completed (== "Yes" is just temporary)
             bool eleCompleted = false; 
-            if (ele.name == "Yes") {
+            if (ele.GetComponent<FloorButton>().isActive) {
                 numCompleted++;
                 eleCompleted = true;
             }

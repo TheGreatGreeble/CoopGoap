@@ -22,22 +22,12 @@ public class ButtonSensor : LocalTargetSensorBase
     // Called when the sensor needs to sense a target for a specific agent.
     public override ITarget Sense(IMonoAgent agent, IComponentReference references)
     {
-        Vector2 buttonPos = this.GetNextButton();
+        GameObject buttonPos = puzzle.GetNextAlienButton();
+
+        if (buttonPos == null) return new PositionTarget(agent.transform.position);
         
-        return new PositionTarget(buttonPos);
+        return new PositionTarget(buttonPos.transform.position);
     }
 
-    private Vector2 GetNextButton()
-    {
-        // Find the player GameObject by tag
-        GameObject player = GameObject.FindWithTag("Player");
-        
-        foreach (var ele in puzzle.Sequence){
-            bool eleCompleted = ele.GetComponent<FloorButton>().isActive;
-            if (!eleCompleted) {
-                return ele.transform.position;
-            }
-        }
-        return Vector2.zero; // maybe replace with some kind of error log, this shouldn't run if puzzle is solved.
-    }
+    
 }
