@@ -54,7 +54,6 @@ public class FloorButton : Interactable
         else{
             sprite.color = offColor;
         }
-        SendInteract();
     }
 
     public bool changeSpecies(bool Bool) {
