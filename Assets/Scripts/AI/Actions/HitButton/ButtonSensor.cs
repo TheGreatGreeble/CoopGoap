@@ -33,11 +33,7 @@ public class ButtonSensor : LocalTargetSensorBase
         GameObject player = GameObject.FindWithTag("Player");
         
         foreach (var ele in puzzle.Sequence){
-            // TODO: Determine if sequence element not completed (== "Yes" is just temporary)
-            bool eleCompleted = false; 
-            if (ele.name == "Yes") {
-                eleCompleted = true;
-            }
+            bool eleCompleted = ele.GetComponent<FloorButton>().isActive;
             if (!eleCompleted) {
                 return ele.transform.position;
             }

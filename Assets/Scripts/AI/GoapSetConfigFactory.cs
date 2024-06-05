@@ -30,6 +30,11 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .AddEffect<PuzzleCompleted>(EffectType.Increase)
             .SetBaseCost(1)
             .SetInRange(0.2f);
+        builder.AddAction<WaitForPlayerAction>()
+            .SetTarget<WaitTarget>()
+            .AddEffect<PuzzleCompleted>(EffectType.Increase)
+            .SetBaseCost(2)
+            .SetInRange(0.2f);
         builder.AddAction<WanderAction>()
             .SetTarget<WanderTarget>()
             .AddEffect<IsWandering>(EffectType.Increase)

@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class WaitTargetSensor : LocalTargetSensorBase
 {
+    public PuzzleConfig puzzle;
     // Called when the class is created.
     public override void Created()
     {
+        puzzle = GameObject.FindWithTag("PuzzleConfig").GetComponent<PuzzleConfig>();
     }
 
     // Called each frame. This can be used to gather data from the world before the sense method is called.
