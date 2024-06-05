@@ -28,7 +28,7 @@ public class AlienButtonSensor : GlobalWorldSensorBase
 
         GameObject nextButton = puzzle.GetNextButton();
         if (nextButton == null) return -1;
-        if (nextButton.name == "pButton") {
+        if (!nextButton.GetComponent<FloorButton>().isHuman) {
             return 1;
         } else {
             return 0;

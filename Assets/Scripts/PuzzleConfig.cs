@@ -25,7 +25,6 @@ public class PuzzleConfig : Reciever
         
         foreach (var ele in Sequence){
             bool eleCompleted = ele.GetComponent<FloorButton>().isActive;
-            bool isPlayerButton = ele.name == "Pbutton" ? true : false;
             if (!eleCompleted) {
                 return ele;
             }
@@ -39,7 +38,7 @@ public class PuzzleConfig : Reciever
         
         foreach (var ele in Sequence){
             bool eleCompleted = ele.GetComponent<FloorButton>().isActive;
-            bool isPlayerButton = ele.name == "pButton" ? true : false;
+            bool isPlayerButton = ele.GetComponent<FloorButton>().isHuman;
             if (!eleCompleted && !isPlayerButton) {
                 return ele;
             }
@@ -53,7 +52,7 @@ public class PuzzleConfig : Reciever
         
         foreach (var ele in Sequence){
             bool eleCompleted = ele.GetComponent<FloorButton>().isActive;
-            bool isPlayerButton = ele.name == "pButton" ? true : false;
+            bool isPlayerButton = ele.GetComponent<FloorButton>().isHuman;
             if (!eleCompleted && isPlayerButton) {
                 return ele;
             }

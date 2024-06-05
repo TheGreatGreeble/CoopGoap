@@ -50,13 +50,6 @@ public class AgentBrain : MonoBehaviour
             
             
         }
-        else if (currentlySolving) {
-            agent.SetGoal<FollowGoal>(false);
-            agent.SetGoal<PuzzleGoal>(true);
-        }
-        else {
-            agent.SetGoal<StopGoal>(true);
-        }
         // else
         // {
         //     agent.SetGoal<StopGoal>(false);;
@@ -66,18 +59,6 @@ public class AgentBrain : MonoBehaviour
     //FixedUpdate is where we inject goals to the ai through player action
     void FixedUpdate()
     {
-        
-        // // Check the distance from the player and set the goals accordingly
-        // if (DistanceFromPlayer() >= 5)
-        // {
-        //     //agent.SetGoal<StopGoal>(true);;
-        //     agent.SetGoal<PuzzleGoal>(true);
-        // }
-        // else
-        // {
-        //     agent.SetGoal<StopGoal>(false);;
-        //     agent.SetGoal<FollowGoal>(true);
-        // }
     }
 
     private float DistanceFromPlayer()
