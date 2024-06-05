@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class PuzzleConfig : MonoBehaviour
+public class PuzzleConfig : Reciever
 {
     [SerializeField]
     public List<GameObject> Sequence;
+    private bool SequenceComplete = false;
+    [SerializeField] private Reciever reciever;
 
     private void Start() {
         if (Sequence == null || Sequence.Count == 0){
@@ -25,6 +28,16 @@ public class PuzzleConfig : MonoBehaviour
         {
             Sequence.Clear();
             Debug.Log("PuzzleConfig Sequence list has been cleared.");
+        }
+    }
+    
+    public override void RecieveInteract(){
+        SequenceComplete = true;
+        foreach(GameObject button in Sequence){
+            SequenceComplete = SequenceComplete && button.GetComponent<FloorButton>().isActive;
+        }
+        if(SequenceComplete){
+            reciever.RecieveInteract();
         }
     }
 }

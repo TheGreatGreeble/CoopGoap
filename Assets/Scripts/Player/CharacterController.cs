@@ -12,12 +12,16 @@ public class CharacterController2D : MonoBehaviour
     private PlayerInput input;
     private InputAction move;
     private InputAction interact;
+    private Animator animator;
+    private SpriteRenderer sprite;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         input = GetComponent<PlayerInput>();
         move = input.actions.FindAction("Move");
+        animator = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
 
         //disable rotation
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -33,6 +37,20 @@ public class CharacterController2D : MonoBehaviour
         float moveWEDirection = move.ReadValue<Vector2>().x;
         float moveNSDirection = move.ReadValue<Vector2>().y;
         rb.velocity = new Vector2(moveWEDirection * moveSpeed, moveNSDirection * moveSpeed);
+        
+        if(Mathf.Abs(moveNSDirection) > 0 || Mathf.Abs(moveWEDirection) > 0){
+            animator.SetBool("walking", true);
+        }
+        else{
+            animator.SetBool("walking", false);
+        }
+        
+        if(moveWEDirection < 0){
+            sprite.flipX = true;
+        }
+        else if (moveWEDirection > 0){
+            sprite.flipX = false;
+        }
     }
     
     public void OnInteract() 
