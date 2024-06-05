@@ -3568,7 +3568,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.25
-  m_Speed: 3.5
+  m_Speed: 7
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3975,11 +3975,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sequence:
   - {fileID: 531622582}
-  - {fileID: 665236702}
-  - {fileID: 1434308892}
   - {fileID: 823634318}
-  - {fileID: 441445758}
+  - {fileID: 1434308892}
   - {fileID: 324094976}
+  - {fileID: 665236702}
+  - {fileID: 441445758}
   reciever: {fileID: 708770014}
 --- !u!4 &1747847246
 Transform:
