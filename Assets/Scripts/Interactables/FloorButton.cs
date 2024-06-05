@@ -6,6 +6,7 @@ public class FloorButton : Interactable
 {
     public bool isHuman = true;
     public bool isActive = false;
+    [SerializeField] GameObject child;
     [SerializeField] bool oneTime = false;
     [SerializeField] bool waitActive = false;
     [SerializeField] float activeSeconds = 3f;
@@ -16,9 +17,11 @@ public class FloorButton : Interactable
     private SpriteRenderer sprite;
     
     private void Start() {
+        changeSpecies(isHuman);
         sprite = GetComponent<SpriteRenderer>();
         sprite.color = isActive ? onColor : offColor;
         if(waitActive) oneTime = true;
+        
     }
     
     
@@ -48,5 +51,16 @@ public class FloorButton : Interactable
             sprite.color = offColor;
         }
         SendInteract();
+    }
+
+    public bool changeSpecies(bool Bool) {
+        isHuman = Bool;
+        if (isHuman) {
+            child.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+        else {
+            child.transform.localRotation = Quaternion.Euler(0, 0, 135);
+        }
+        return Bool;
     }
 }

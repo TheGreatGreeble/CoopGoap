@@ -10,7 +10,6 @@ public class AgentBrain : MonoBehaviour
     private AgentBehaviour agent;
     private PlayerInput input;
     private InputAction instruction;
-    private PuzzleConfig puzzleConfig;
 
     private void Awake()
     {
@@ -23,7 +22,7 @@ public class AgentBrain : MonoBehaviour
     private void Start()
     {
         GameObject configObj = GameObject.FindWithTag("PuzzleConfig");
-        puzzleConfig = configObj.GetComponent<PuzzleConfig>();
+        PuzzleConfig puzzleConfig = configObj.GetComponent<PuzzleConfig>();
     }
     private void OnEnable()
     {
@@ -31,11 +30,11 @@ public class AgentBrain : MonoBehaviour
         instruction.Enable();
     }
 
-    //FixedUpdate is where we inject goals to the ai through player action
+    // FixedUpdate is where we inject goals to the ai through player action
     void FixedUpdate()
     {
         // Check the distance from the player and set the goals accordingly
-        if (DistanceFromPlayer() >= 1 && !currentlySolving)
+        if (DistanceFromPlayer() >= 2 && !currentlySolving)
         {
             agent.SetGoal<PuzzleGoal>(false);
             agent.SetGoal<FollowGoal>(true);
@@ -99,7 +98,10 @@ public class AgentBrain : MonoBehaviour
             {
                 if (col != null)
                 {
-                    col.gameObject.GetComponent<FloorButton>().isHuman = false;
+                    FloorButton floorButton = col.gameObject.GetComponent<FloorButton>();
+                    if (floorButton != null) {
+                        floorButton.changeSpecies(!floorButton.isHuman);
+                    }
                 }
             }
         }
