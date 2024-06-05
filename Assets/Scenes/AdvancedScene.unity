@@ -742,11 +742,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 531622586}
-  - {fileID: 665236703}
-  - {fileID: 1434308893}
   - {fileID: 823634319}
-  - {fileID: 441445759}
   - {fileID: 324094977}
+  - {fileID: 1434308893}
+  - {fileID: 441445759}
+  - {fileID: 665236703}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &642357258
@@ -3976,10 +3976,10 @@ MonoBehaviour:
   Sequence:
   - {fileID: 531622582}
   - {fileID: 823634318}
-  - {fileID: 1434308892}
   - {fileID: 324094976}
-  - {fileID: 665236702}
+  - {fileID: 1434308892}
   - {fileID: 441445758}
+  - {fileID: 665236702}
   reciever: {fileID: 708770014}
 --- !u!4 &1747847246
 Transform:
