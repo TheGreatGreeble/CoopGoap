@@ -40,14 +40,12 @@ public class ButtonAction : ActionBase<ButtonAction.Data>
         foreach(Collider2D col in overlaps){
             if (col.gameObject == alienButton) {
                 Debug.Log("stoping waiting");
-                if (puzzle.GetNextButton() == alienButton) {
-                    Debug.Log("stoping waiting");
-                    Interactable inter;
-                    if(alienButton.TryGetComponent(out inter)){
-                        inter.Interact();
-                    }
-                    return ActionRunState.Stop;
+                Debug.Log("stoping waiting");
+                Interactable inter;
+                if(alienButton.TryGetComponent(out inter)){
+                    inter.Interact();
                 }
+                return ActionRunState.Stop;
             }
         }
         // If the button isn't hit, keep going

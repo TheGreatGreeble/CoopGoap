@@ -49,7 +49,6 @@ public class WaitForPlayerAction : ActionBase<WaitForPlayerAction.Data>
         // If the button isn't hit, keep going
         return ActionRunState.Continue;
         
-        
     }
 
     // Called when the action is ended for a specific agent.
