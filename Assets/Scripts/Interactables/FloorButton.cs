@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class FloorButton : Interactable
 {
+    public bool isHuman = true;
     public bool isActive = false;
+
     [SerializeField] bool oneTime = false;
     [SerializeField] bool waitActive = false;
     [SerializeField] float activeSeconds = 3f;
+    
+    [SerializeField] SpriteRenderer child;
+    [SerializeField] private Sprite human;
+    [SerializeField] private Sprite alien;
     
     [SerializeField] Color onColor = Color.green;
     [SerializeField] Color offColor = Color.red;
@@ -15,9 +21,11 @@ public class FloorButton : Interactable
     private SpriteRenderer sprite;
     
     private void Start() {
+        changeSpecies(isHuman);
         sprite = GetComponent<SpriteRenderer>();
         sprite.color = isActive ? onColor : offColor;
         if(waitActive) oneTime = true;
+        
     }
     
     
@@ -46,6 +54,16 @@ public class FloorButton : Interactable
         else{
             sprite.color = offColor;
         }
-        SendInteract();
+    }
+
+    public bool changeSpecies(bool Bool) {
+        isHuman = Bool;
+        if (isHuman) {
+            child.sprite = human;
+        }
+        else {
+            child.sprite = alien;
+        }
+        return Bool;
     }
 }
