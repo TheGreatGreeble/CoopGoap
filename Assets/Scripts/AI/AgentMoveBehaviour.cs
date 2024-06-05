@@ -1,6 +1,8 @@
 using UnityEngine;
 using CrashKonijn.Goap.Behaviours;
 using CrashKonijn.Goap.Interfaces;
+using Unity.AI;
+using UnityEngine.AI;
 
 public class AgentMoveBehaviour : MonoBehaviour
 {
@@ -8,10 +10,16 @@ public class AgentMoveBehaviour : MonoBehaviour
     private AgentBehaviour agent;
     private ITarget currentTarget;
     private bool shouldMove;
+    private NavMeshAgent navAgent;
 
     private void Awake()
     {
         this.agent = this.GetComponent<AgentBehaviour>();
+        navAgent = GetComponent<NavMeshAgent>();
+        navAgent.updateRotation = false;
+        navAgent.updateUpAxis = false;
+        navAgent.autoBraking = true;
+        navAgent.speed = moveSpeed;
     }
 
     private void OnEnable()
@@ -31,6 +39,7 @@ public class AgentMoveBehaviour : MonoBehaviour
     private void OnTargetInRange(ITarget target)
     {
         this.shouldMove = false;
+        navAgent.isStopped = true;
     }
 
     private void OnTargetChanged(ITarget target, bool inRange)
@@ -42,16 +51,19 @@ public class AgentMoveBehaviour : MonoBehaviour
     private void OnTargetOutOfRange(ITarget target)
     {
         this.shouldMove = true;
+        navAgent.isStopped = false;
     }
 
     public void Update()
     {
-        if (!this.shouldMove)
+        if (!this.shouldMove){
             return;
+        }
         
         if (this.currentTarget == null)
             return;
         
-        this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.currentTarget.Position.y, this.currentTarget.Position.z), Time.deltaTime * moveSpeed);
+        navAgent.SetDestination(currentTarget.Position);
+        // this.transform.position = Vector3.MoveTowards(this.transform.position, new Vector3(this.currentTarget.Position.x, this.currentTarget.Position.y, this.currentTarget.Position.z), Time.deltaTime * moveSpeed);
     }
 }
