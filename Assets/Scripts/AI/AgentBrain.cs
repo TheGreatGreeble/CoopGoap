@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class AgentBrain : MonoBehaviour
 {
-    private bool currentlySolving;
+    private bool currentlySolving = false;
     private AgentBehaviour agent;
     private PlayerInput input;
     private InputAction instruction;
@@ -25,7 +25,7 @@ public class AgentBrain : MonoBehaviour
         GameObject configObj = GameObject.FindWithTag("PuzzleConfig");
         puzzleConfig = configObj.GetComponent<PuzzleConfig>();
     }
-        private void OnEnable()
+    private void OnEnable()
     {
         // enable input action(s)
         instruction.Enable();
@@ -35,10 +35,17 @@ public class AgentBrain : MonoBehaviour
     void FixedUpdate()
     {
         // Check the distance from the player and set the goals accordingly
-        if (DistanceFromPlayer() >= 5 && !currentlySolving)
+        if (DistanceFromPlayer() >= 1 && !currentlySolving)
         {
-            //agent.SetGoal<StopGoal>(true);;
+            agent.SetGoal<PuzzleGoal>(false);
             agent.SetGoal<FollowGoal>(true);
+        }
+        else if (currentlySolving) {
+            agent.SetGoal<FollowGoal>(false);
+            agent.SetGoal<PuzzleGoal>(true);
+        }
+        else {
+            agent.SetGoal<StopGoal>(true);
         }
         // else
         // {
@@ -81,8 +88,6 @@ public class AgentBrain : MonoBehaviour
             if (!currentlySolving) {
                 currentlySolving = true;
                 //set ai goal to solve puzzle
-                agent.SetGoal<FollowGoal>(false);
-                agent.SetGoal<PuzzleGoal>(true);
             }
             else {
                 currentlySolving = false;
