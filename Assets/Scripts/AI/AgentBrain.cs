@@ -38,15 +38,6 @@ public class AgentBrain : MonoBehaviour
         // Check for the "E" key press every frame
         if (instruction.triggered)
         {
-            if (!shouldSolvePuzzle) {
-                agent.EndAction();
-                agent.SetGoal<PuzzleGoal>(false);
-                shouldSolvePuzzle = true;
-            } else {
-                agent.EndAction();
-                agent.SetGoal<FollowGoal>(false);
-            }
-            
             
             
         }
@@ -109,9 +100,22 @@ public class AgentBrain : MonoBehaviour
                     FloorButton floorButton = col.gameObject.GetComponent<FloorButton>();
                     if (floorButton != null) {
                         floorButton.changeSpecies(!floorButton.isHuman);
+                        return;
                     }
                 }
             }
         }
+        if (!shouldSolvePuzzle) {
+            agent.SetGoal<FollowGoal>(true);
+            agent.EndAction();
+            agent.SetGoal<PuzzleGoal>(false);
+            shouldSolvePuzzle = true;
+        } else {
+            agent.SetGoal<PuzzleGoal>(true);
+            agent.EndAction();
+            agent.SetGoal<FollowGoal>(false);
+            shouldSolvePuzzle = false;
+        }
+        return;
     }
 }

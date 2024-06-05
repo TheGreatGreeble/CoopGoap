@@ -32,14 +32,14 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .AddEffect<PuzzleCompleted>(EffectType.Increase)
             .SetBaseCost(0)
             .SetInRange(0.2f)
-            .AddCondition<IsNextBtnAlien>(Comparison.SmallerThanOrEqual, 0)
+            .AddCondition<IsNextBtnAlien>(Comparison.GreaterThanOrEqual, 1)
             .AddCondition<PuzzleCompleted>(Comparison.SmallerThan, puzzle.Sequence.Count);
         builder.AddAction<WaitForPlayerAction>()
             .SetTarget<WaitTarget>()
             .AddEffect<PuzzleCompleted>(EffectType.Increase)
             .SetBaseCost(0)
             .SetInRange(0.2f)
-            .AddCondition<IsNextBtnAlien>(Comparison.GreaterThanOrEqual, 1)
+            .AddCondition<IsNextBtnAlien>(Comparison.SmallerThanOrEqual, 0)
             .AddCondition<PuzzleCompleted>(Comparison.SmallerThan, puzzle.Sequence.Count);
         builder.AddAction<WanderAction>()
             .SetTarget<WanderTarget>()
@@ -50,7 +50,7 @@ public class GoapSetConfigFactory : GoapSetFactoryBase
             .SetTarget<FollowTarget>()
             .AddEffect<IsFollowing>(EffectType.Increase)
             .SetBaseCost(1)
-            .SetInRange(1.5f);
+            .SetInRange(2f);
         builder.AddAction<StopAction>()
             .SetTarget<StopTarget>()
             .AddEffect<IsStopping>(EffectType.Increase)
